@@ -1,0 +1,659 @@
+/* ══════════════════════════════════════════════
+   KOREO ADAM AR — STYLESHEET
+   Elektro Fans um · Dark Theme Premium
+══════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap');
+
+/* ─── CSS Variables ─── */
+:root {
+  --bg-deep: #0a0a0f;
+  --bg-card: rgba(15, 15, 25, 0.85);
+  --gold: #FFD700;
+  --gold-dim: #c9a800;
+  --gold-glow: rgba(255, 215, 0, 0.25);
+  --white: #f0f0f0;
+  --white-dim: rgba(240, 240, 240, 0.55);
+  --accent: #00aaff;
+  --danger: #ff4444;
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Reset & Base ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  font-family: 'Outfit', sans-serif;
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ══════════════════════════════════════════════
+   LOADING SCREEN
+══════════════════════════════════════════════ */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #12121f 0%, #0a0a0f 100%);
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+/* Logo ring */
+.logo-ring {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  animation: spin-ring 2.5s linear infinite;
+}
+
+@keyframes spin-ring {
+  to {
+    transform: rotate(270deg);
+  }
+}
+
+.ring-track {
+  fill: none;
+  stroke: rgba(255, 215, 0, 0.12);
+  stroke-width: 4;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 339.3;
+  stroke-dashoffset: 84.8;
+  filter: drop-shadow(0 0 6px var(--gold));
+  animation: progress-fill 2s ease-in-out infinite alternate;
+}
+
+@keyframes progress-fill {
+  0% {
+    stroke-dashoffset: 280;
+    opacity: 0.6;
+  }
+
+  100% {
+    stroke-dashoffset: 40;
+    opacity: 1;
+  }
+}
+
+.logo-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-e {
+  font-size: 2.8rem;
+  filter: drop-shadow(0 0 12px var(--gold));
+  animation: pulse-emoji 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-emoji {
+  0% {
+    transform: scale(0.92);
+    filter: drop-shadow(0 0 8px var(--gold));
+  }
+
+  100% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 20px var(--gold));
+  }
+}
+
+.loading-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #FFD700, #FFF5A0, #c9a800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.loading-sub {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--white-dim);
+  letter-spacing: 0.08em;
+}
+
+/* Loading bar */
+.loading-bar-wrap {
+  width: 200px;
+  height: 3px;
+  background: rgba(255, 215, 0, 0.12);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.loading-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #c9a800, #FFD700, #FFF5A0);
+  border-radius: 99px;
+  box-shadow: 0 0 8px var(--gold);
+  transition: width 0.4s ease;
+  animation: bar-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes bar-shimmer {
+  0% {
+    width: 15%;
+  }
+
+  50% {
+    width: 70%;
+  }
+
+  100% {
+    width: 15%;
+  }
+}
+
+/* Start AR Button */
+#btn-start-ar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #00f7ff, #00fbff);
+  color: #0a0a0f;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.25);
+  margin-top: 10px;
+}
+
+#btn-start-ar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
+}
+
+
+/* ══════════════════════════════════════════════
+   A-FRAME SCENE
+══════════════════════════════════════════════ */
+a-scene {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+/* MindAR injects camera <video> directly into <body> with z-index:-2 — fix it */
+body>video {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  z-index: 1 !important;
+  display: block !important;
+}
+
+/* A-Frame canvas sits above camera video, must be transparent */
+/* Fix stacking context: a-scene harus berada di atas video kamera */
+a-scene {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  z-index: 2 !important;
+}
+
+a-scene canvas {
+  background: transparent !important;
+}
+
+/* ══════════════════════════════════════════════
+   UI OVERLAY
+══════════════════════════════════════════════ */
+#ui-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ─── Header ─── */
+.ar-header {
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: linear-gradient(to bottom,
+      rgba(10, 10, 15, 0.85) 0%,
+      transparent 100%);
+  backdrop-filter: blur(0px);
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bolt {
+  font-size: 1.4rem;
+  filter: drop-shadow(0 0 8px var(--gold));
+}
+
+.brand-text {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: linear-gradient(90deg, #FFD700, #FFF5A0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 215, 0, 0.3);
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--gold);
+  transition: all var(--transition);
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-btn:hover {
+  border-color: var(--gold);
+  background: rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+/* ─── Scan Frame ─── */
+#scan-frame-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.scan-frame {
+  position: relative;
+  width: min(75vw, 280px);
+  aspect-ratio: 16 / 10;
+}
+
+/* Corner brackets */
+.corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-color: var(--gold);
+  border-style: solid;
+  border-width: 0;
+}
+
+.corner.tl {
+  top: 0;
+  left: 0;
+  border-top-width: 3px;
+  border-left-width: 3px;
+  border-top-left-radius: 4px;
+}
+
+.corner.tr {
+  top: 0;
+  right: 0;
+  border-top-width: 3px;
+  border-right-width: 3px;
+  border-top-right-radius: 4px;
+}
+
+.corner.bl {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 3px;
+  border-left-width: 3px;
+  border-bottom-left-radius: 4px;
+}
+
+.corner.br {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 3px;
+  border-right-width: 3px;
+  border-bottom-right-radius: 4px;
+}
+
+.corner {
+  filter: drop-shadow(0 0 4px var(--gold));
+  animation: corner-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes corner-pulse {
+  0% {
+    opacity: 0.6;
+    filter: drop-shadow(0 0 3px var(--gold));
+  }
+
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px var(--gold));
+  }
+}
+
+/* Scan line */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--gold) 30%,
+      #fffbe0 50%,
+      var(--gold) 70%,
+      transparent 100%);
+  box-shadow: 0 0 10px 2px var(--gold-glow);
+  animation: scan 2.4s ease-in-out infinite;
+  top: 0;
+}
+
+@keyframes scan {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  95% {
+    opacity: 1;
+  }
+
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* Scan hint text */
+.scan-hint {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--white-dim);
+  text-align: center;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  max-width: 260px;
+}
+
+.scan-hint strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ─── Detected Badge ─── */
+#detected-badge {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(10, 10, 15, 0.8);
+  border: 1.5px solid rgba(0, 255, 100, 0.4);
+  border-radius: 99px;
+  backdrop-filter: blur(12px);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #00ff88;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 16px rgba(0, 255, 100, 0.2);
+  animation: badge-in 0.4s ease;
+  z-index: 200;
+  pointer-events: none;
+}
+
+@keyframes badge-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 6px #00ff88;
+  animation: dot-pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes dot-pulse {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* ─── Footer ─── */
+.ar-footer {
+  padding: 14px 20px;
+  background: linear-gradient(to top,
+      rgba(10, 10, 15, 0.75) 0%,
+      transparent 100%);
+  display: flex;
+  justify-content: center;
+}
+
+.footer-tag {
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--white-dim);
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════
+   TARGET FOUND: Scan frame hides, glow appears
+══════════════════════════════════════════════ */
+body.target-found #scan-frame-wrap {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+body.target-lost #scan-frame-wrap {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   LIGHTNING ANIMATION (HAND TRACKING)
+══════════════════════════════════════════════ */
+#lightning-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#lightning-overlay.active {
+  opacity: 1;
+}
+
+.lightning {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lightning.left,
+.lightning.right {
+  width: 15vw;
+  max-width: 100px;
+  top: -20px;
+  bottom: -20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 1000' preserveAspectRatio='none'%3E%3Cpath d='M100,0 L40,300 L130,280 L30,650 L110,630 L50,1000 L150,640 L70,660 L160,290 L80,310 L170,0 Z' fill='%23ffffff'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  filter: drop-shadow(0 0 10px #0ff) drop-shadow(0 0 20px #00aaff) drop-shadow(0 0 40px #0055ff);
+}
+
+.lightning.left {
+  left: 0;
+}
+
+.lightning.right {
+  right: 0;
+  transform: scaleX(-1) scaleY(1.05);
+  /* Flip and slightly scale so it looks different from left */
+}
+
+/* Sembunyikan top dan bottom karena sekarang petir menyambar ke bawah */
+.lightning.top,
+.lightning.bottom {
+  display: none;
+}
+
+#lightning-overlay.active .lightning {
+  animation: strike-down 0.7s infinite cubic-bezier(0.2, 0, 0.8, 1);
+}
+
+/* Stagger petir kanan agar tidak terlalu simetris timingnya */
+#lightning-overlay.active .lightning.right {
+  animation-delay: 0.15s;
+  animation-duration: 0.85s;
+}
+
+@keyframes strike-down {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    opacity: 1;
+  }
+
+  10% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 1;
+    filter: drop-shadow(0 0 30px #fff) drop-shadow(0 0 40px #0ff);
+  }
+
+  15% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px #0ff);
+  }
+
+  45% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@media (max-width: 380px) {
+  .loading-title {
+    font-size: 1.3rem;
+  }
+
+  .scan-frame {
+    width: 85vw;
+  }
+}

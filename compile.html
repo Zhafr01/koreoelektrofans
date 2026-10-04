@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Compile AR Targets</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "mind-ar/": "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/",
+      "./controller-mGt1s8dJ.js": "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/controller-mGt1s8dJ.js",
+      "./ui-fBadYuor.js": "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/ui-fBadYuor.js"
+    }
+  }
+  </script>
+  <script type="module">
+    import "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image.prod.js";
+    // MINDAR is now set on window by the module itself
+    window.__mindARReady = true;
+    document.dispatchEvent(new Event('mindar-ready'));
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: radial-gradient(ellipse at center, #12121f 0%, #0a0a0f 100%);
+      color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 32px 24px;
+    }
+
+    .card {
+      background: rgba(15, 15, 25, 0.95);
+      border: 1.5px solid rgba(255, 215, 0, 0.2);
+      border-radius: 24px;
+      padding: 40px 36px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 60px rgba(255, 215, 0, 0.06);
+    }
+
+    .icon { font-size: 3rem; margin-bottom: 16px; }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #FFD700, #FFF5A0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 0.87rem;
+      color: rgba(240,240,240,0.55);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    /* ── Drop Zone ── */
+    #drop-zone {
+      border: 2px dashed rgba(255, 215, 0, 0.3);
+      border-radius: 16px;
+      padding: 28px 20px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      background: rgba(255,215,0,0.03);
+      position: relative;
+    }
+    #drop-zone:hover, #drop-zone.drag-over {
+      border-color: rgba(255, 215, 0, 0.7);
+      background: rgba(255,215,0,0.07);
+    }
+    #drop-zone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .drop-icon { font-size: 2rem; margin-bottom: 8px; }
+    .drop-label { font-size: 0.9rem; color: rgba(240,240,240,0.7); }
+    .drop-sub   { font-size: 0.78rem; color: rgba(240,240,240,0.4); margin-top: 4px; }
+
+    /* ── Image Slots ── */
+    #slots-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .slot {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,215,0,0.05);
+      border: 1px solid rgba(255,215,0,0.12);
+      border-radius: 12px;
+      padding: 10px 14px;
+      animation: slideIn 0.25s ease;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .slot-index {
+      min-width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(255,215,0,0.15);
+      border: 1px solid rgba(255,215,0,0.3);
+      color: #FFD700;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .slot-thumb {
+      width: 44px; height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid rgba(255,215,0,0.2);
+      flex-shrink: 0;
+    }
+
+    .slot-info { flex: 1; min-width: 0; }
+    .slot-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #f0f0f0;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .slot-size { font-size: 0.74rem; color: rgba(240,240,240,0.45); margin-top: 2px; }
+
+    .slot-remove {
+      background: rgba(255,60,60,0.15);
+      border: 1px solid rgba(255,60,60,0.2);
+      color: #ff8888;
+      border-radius: 8px;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .slot-remove:hover { background: rgba(255,60,60,0.3); }
+
+    /* ── Info Box ── */
+    .info-box {
+      background: rgba(255,215,0,0.06);
+      border: 1px solid rgba(255,215,0,0.15);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      color: rgba(240,240,240,0.65);
+      text-align: left;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .info-box strong { color: #FFD700; }
+
+    /* ── Button ── */
+    #btn-compile {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #c9a800, #FFD700);
+      color: #0a0a0f;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.25);
+      width: 100%;
+      justify-content: center;
+      letter-spacing: 0.03em;
+    }
+    #btn-compile:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
+    }
+    #btn-compile:disabled {
+      opacity: 0.6; cursor: not-allowed; transform: none;
+    }
+
+    /* ── Progress ── */
+    #progress-wrap {
+      display: none;
+      margin-top: 20px;
+      background: rgba(255,215,0,0.08);
+      border-radius: 8px;
+      height: 8px;
+      overflow: hidden;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c9a800, #FFD700, #FFF5A0);
+      border-radius: 8px;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px rgba(255,215,0,0.5);
+    }
+
+    #status-msg {
+      margin-top: 14px;
+      font-size: 0.83rem;
+      color: rgba(240,240,240,0.55);
+      min-height: 20px;
+      line-height: 1.5;
+    }
+    #status-msg.success { color: #00ff88; font-weight: 600; }
+    #status-msg.error   { color: #ff6666; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">🎯</div>
+  <h1>Compile AR Targets</h1>
+  <p class="subtitle">Pilih gambar-gambar yang akan jadi target scan AR.<br>Urutan = index (gambar pertama = index 0).</p>
+
+  <!-- Drop Zone -->
+  <div id="drop-zone">
+    <input type="file" id="file-input" accept="image/*" multiple />
+    <div class="drop-icon">📁</div>
+    <div class="drop-label">Klik atau drag & drop gambar ke sini</div>
+    <div class="drop-sub">Bisa pilih banyak sekaligus · JPG, PNG, JPEG</div>
+  </div>
+
+  <!-- Image Slots -->
+  <div id="slots-container"></div>
+
+  <!-- Info -->
+  <div class="info-box" id="info-box" style="display:none">
+    <strong>📋 Urutan target:</strong><br>
+    <span id="info-list"></span>
+  </div>
+
+  <button id="btn-compile" onclick="startCompile()" disabled>
+    <span>⚡</span> Mulai Kompilasi
+  </button>
+
+  <div id="progress-wrap">
+    <div id="progress-bar"></div>
+  </div>
+  <p id="status-msg"></p>
+</div>
+
+<script>
+  // ── State ──
+  const slots = []; // { file, img, url }
+
+  const dropZone     = document.getElementById('drop-zone');
+  const fileInput    = document.getElementById('file-input');
+  const slotsContainer = document.getElementById('slots-container');
+  const infoBox      = document.getElementById('info-box');
+  const infoList     = document.getElementById('info-list');
+  const btnCompile   = document.getElementById('btn-compile');
+
+  // ── Drag & Drop ──
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    handleFiles([...e.dataTransfer.files]);
+  });
+
+  fileInput.addEventListener('change', () => {
+    handleFiles([...fileInput.files]);
+    fileInput.value = '';
+  });
+
+  // ── Auto Load 20 Targets (langsung jalan, tidak pakai DOMContentLoaded) ──
+  (async () => {
+    const filesToLoad = [
+      'Koreo Adam.jpeg', 'koreo_part_0.jpg', 'koreo_part_1.jpg', 'koreo_part_2.jpg', 'koreo_part_3.jpg',
+      'Raijin1.jpeg', 'raijin1_part_0.jpg', 'raijin1_part_1.jpg', 'raijin1_part_2.jpg', 'raijin1_part_3.jpg',
+      'Raijin2.jpeg', 'raijin2_part_0.jpg', 'raijin2_part_1.jpg', 'raijin2_part_2.jpg', 'raijin2_part_3.jpg',
+      'raijin_fisik_enhanced.png', 'raijin_fisik_part_0.png', 'raijin_fisik_part_1.png', 'raijin_fisik_part_2.png', 'raijin_fisik_part_3.png',
+      'zeus.png'
+    ];
+
+    const statusEl = document.getElementById('status-msg');
+    statusEl.textContent = 'Memuat otomatis 21 gambar target...';
+
+    for (const filename of filesToLoad) {
+      try {
+        const res = await fetch(filename);
+        if (!res.ok) { console.warn('Skip (not found):', filename); continue; }
+        const blob = await res.blob();
+        const file = new File([blob], filename, { type: blob.type });
+
+        await new Promise(resolve => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const url = e.target.result;
+            const img = new Image();
+            img.onload = () => { slots.push({ file, img, url }); resolve(); };
+            img.onerror = () => resolve(); // skip jika gagal
+            img.src = url;
+          };
+          reader.readAsDataURL(file);
+        });
+      } catch (e) {
+        console.error('Failed to load', filename, e);
+      }
+    }
+
+    renderSlots();
+    statusEl.textContent = `✅ ${slots.length} gambar berhasil dimuat! Siap dikompilasi.`;
+    statusEl.className = 'success';
+  })();
+
+  // ── Handle Files ──
+  function handleFiles(files) {
+    const imageFiles = files.filter(f => f.type.startsWith('image/'));
+    if (!imageFiles.length) return;
+
+    imageFiles.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const url = e.target.result;
+        const img = new Image();
+        img.onload = () => {
+          slots.push({ file, img, url });
+          renderSlots();
+        };
+        img.src = url;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ── Render Slots ──
+  function renderSlots() {
+    slotsContainer.innerHTML = '';
+
+    slots.forEach((slot, i) => {
+      const div = document.createElement('div');
+      div.className = 'slot';
+      div.innerHTML = `
+        <div class="slot-index">${i}</div>
+        <img class="slot-thumb" src="${slot.url}" />
+        <div class="slot-info">
+          <div class="slot-name">${slot.file.name}</div>
+          <div class="slot-size">${(slot.file.size / 1024).toFixed(1)} KB · ${slot.img.width}×${slot.img.height}px</div>
+        </div>
+        <button class="slot-remove" onclick="removeSlot(${i})" title="Hapus">✕</button>
+      `;
+      slotsContainer.appendChild(div);
+    });
+
+    // Update info box
+    if (slots.length > 0) {
+      infoBox.style.display = 'block';
+      infoList.innerHTML = slots.map((s, i) =>
+        `<strong>Index ${i}</strong> → ${s.file.name}<br>`
+      ).join('');
+      btnCompile.disabled = false;
+    } else {
+      infoBox.style.display = 'none';
+      btnCompile.disabled = true;
+    }
+  }
+
+  function removeSlot(index) {
+    slots.splice(index, 1);
+    renderSlots();
+  }
+
+  // ── Compile ──
+  async function startCompile() {
+    if (slots.length === 0) return;
+
+    const progressW = document.getElementById('progress-wrap');
+    const progressB = document.getElementById('progress-bar');
+    const statusMsg = document.getElementById('status-msg');
+
+    btnCompile.disabled = true;
+    btnCompile.innerHTML = '<span>⏳</span> Memuat library...';
+    progressW.style.display = 'block';
+    progressB.style.width = '5%';
+    statusMsg.className = '';
+
+    // Tunggu MindAR siap (ESM load async)
+    if (!window.__mindARReady || typeof MINDAR === 'undefined' || !MINDAR.IMAGE) {
+      statusMsg.textContent = 'Menunggu MindAR library termuat...';
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => reject(new Error('Timeout: MindAR tidak termuat dalam 15 detik. Cek koneksi internet.')), 15000);
+        document.addEventListener('mindar-ready', () => { clearTimeout(timeout); resolve(); }, { once: true });
+      }).catch(err => { throw err; });
+    }
+
+    if (typeof MINDAR === 'undefined' || !MINDAR.IMAGE) {
+      throw new Error('MINDAR.IMAGE tidak tersedia setelah load.');
+    }
+
+    btnCompile.innerHTML = '<span>⏳</span> Mengkompilasi...';
+    progressB.style.width = '0%';
+    statusMsg.className = '';
+    statusMsg.textContent = '';
+
+    try {
+      statusMsg.textContent = `Memuat ${slots.length} gambar...`;
+      progressB.style.width = '15%';
+
+      const images = slots.map(s => s.img);
+
+      statusMsg.textContent = 'Menginisialisasi MindAR compiler...';
+      progressB.style.width = '30%';
+
+      const compiler = new MINDAR.IMAGE.Compiler();
+
+      statusMsg.textContent = 'Menganalisis semua gambar target...';
+      progressB.style.width = '40%';
+
+      await compiler.compileImageTargets(images, (progress) => {
+        const pct = 40 + Math.round(progress * 0.5); // 50% of the bar is reserved for this phase
+        progressB.style.width = pct + '%';
+        statusMsg.textContent = `Kompilasi: ${Math.round(progress)}% (${slots.length} target)`;
+      });
+
+      progressB.style.width = '95%';
+      statusMsg.textContent = 'Mengekspor file targets.mind...';
+
+      const exportedBuffer = await compiler.exportData();
+
+      const blob = new Blob([exportedBuffer]);
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = 'targets.mind';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      progressB.style.width = '100%';
+      statusMsg.className = 'success';
+      statusMsg.textContent = `✅ targets.mind berhasil didownload! (${slots.length} target: ${slots.map((s,i) => `index ${i} = ${s.file.name}`).join(', ')})`;
+
+      btnCompile.innerHTML = '<span>✅</span> Kompilasi Selesai!';
+      btnCompile.disabled = false;
+
+    } catch (err) {
+      console.error(err);
+      statusMsg.className = 'error';
+      statusMsg.textContent = '❌ Error: ' + (err.message || err.toString());
+      btnCompile.innerHTML = '<span>⚡</span> Coba Lagi';
+      btnCompile.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>

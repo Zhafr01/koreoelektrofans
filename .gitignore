@@ -1,0 +1,3 @@
+node_modules/
+cloudflared-linux-amd64.deb
+.DS_Store
