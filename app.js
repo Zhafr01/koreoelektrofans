@@ -128,11 +128,13 @@
             }
           }
 
-          // Target 20: Zeus
-          const targetZeus = document.querySelector(`[mindar-image-target="targetIndex: 20"]`);
-          if (targetZeus) {
-            targetZeus.addEventListener('targetFound', onZeusFound);
-            targetZeus.addEventListener('targetLost',  onZeusLost);
+          // Target 20-55: Zeus
+          for (let i = 20; i <= 55; i++) {
+            const targetZeus = document.querySelector(`[mindar-image-target="targetIndex: ${i}"]`);
+            if (targetZeus) {
+              targetZeus.addEventListener('targetFound', onZeusFound);
+              targetZeus.addEventListener('targetLost',  onZeusLost);
+            }
           }
         }
 

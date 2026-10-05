@@ -289,11 +289,18 @@
       'Raijin1.jpeg', 'raijin1_part_0.jpg', 'raijin1_part_1.jpg', 'raijin1_part_2.jpg', 'raijin1_part_3.jpg',
       'Raijin2.jpeg', 'raijin2_part_0.jpg', 'raijin2_part_1.jpg', 'raijin2_part_2.jpg', 'raijin2_part_3.jpg',
       'raijin_fisik_enhanced.png', 'raijin_fisik_part_0.png', 'raijin_fisik_part_1.png', 'raijin_fisik_part_2.png', 'raijin_fisik_part_3.png',
-      'zeus.png'
+      'zeus.png',
+      'zeus1.jpeg', 'zeus1_part_0.jpg', 'zeus1_part_1.jpg', 'zeus1_part_2.jpg', 'zeus1_part_3.jpg',
+      'zeus2.jpeg', 'zeus2_part_0.jpg', 'zeus2_part_1.jpg', 'zeus2_part_2.jpg', 'zeus2_part_3.jpg',
+      'zeus3.jpeg', 'zeus3_part_0.jpg', 'zeus3_part_1.jpg', 'zeus3_part_2.jpg', 'zeus3_part_3.jpg',
+      'zeus4.jpeg', 'zeus4_part_0.jpg', 'zeus4_part_1.jpg', 'zeus4_part_2.jpg', 'zeus4_part_3.jpg',
+      'zeus5.jpeg', 'zeus5_part_0.jpg', 'zeus5_part_1.jpg', 'zeus5_part_2.jpg', 'zeus5_part_3.jpg',
+      'zeus6.jpeg', 'zeus6_part_0.jpg', 'zeus6_part_1.jpg', 'zeus6_part_2.jpg', 'zeus6_part_3.jpg',
+      'zeus7.jpeg', 'zeus7_part_0.jpg', 'zeus7_part_1.jpg', 'zeus7_part_2.jpg', 'zeus7_part_3.jpg'
     ];
 
     const statusEl = document.getElementById('status-msg');
-    statusEl.textContent = 'Memuat otomatis 21 gambar target...';
+    statusEl.textContent = 'Memuat otomatis 56 gambar target...';
 
     for (const filename of filesToLoad) {
       try {
@@ -444,7 +451,7 @@
       a.download = 'targets.mind';
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
+      if (a.parentNode) document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
       progressB.style.width = '100%';
