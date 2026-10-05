@@ -116,7 +116,7 @@
        A-FRAME AR SCENE
   ══════════════════════════════════════════ -->
   <a-scene id="ar-scene"
-    mindar-image="imageTargetSrc: targets.mind?v=3; autoStart: false; uiLoading: no; uiError: no; uiScanning: no;"
+    mindar-image="imageTargetSrc: targets.mind?v=5; autoStart: false; uiLoading: no; uiError: no; uiScanning: no;"
     color-space="sRGB" renderer="colorManagement: true; physicallyCorrectLights: true; alpha: true"
     vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
     <a-assets>
@@ -184,132 +184,144 @@
       <a-plane class="raijin-plane" position="0 0 0" width="1" height="0.667" rotation="0 0 0" material="src: #raijin-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
 
-    <!-- FOTO FISIK ZEUS (Target 20) -->
+    <!-- FOTO FISIK ZEUS (Target 20-24) -->
     <a-entity mindar-image-target="targetIndex: 20" id="target-zeus">
       <a-plane class="zeus-plane" position="0 0 0" width="1" height="1.5" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
+    <a-entity mindar-image-target="targetIndex: 21" id="target-zeus-tl">
+      <a-plane class="zeus-plane" position="0.5 -0.75 0" width="2" height="3" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
+    </a-entity>
+    <a-entity mindar-image-target="targetIndex: 22" id="target-zeus-tr">
+      <a-plane class="zeus-plane" position="-0.5 -0.75 0" width="2" height="3" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
+    </a-entity>
+    <a-entity mindar-image-target="targetIndex: 23" id="target-zeus-bl">
+      <a-plane class="zeus-plane" position="0.5 0.75 0" width="2" height="3" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
+    </a-entity>
+    <a-entity mindar-image-target="targetIndex: 24" id="target-zeus-br">
+      <a-plane class="zeus-plane" position="-0.5 0.75 0" width="2" height="3" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
+    </a-entity>
 
-    <!-- ZEUS 1 TARGETS (21-25) -->
-    <a-entity mindar-image-target="targetIndex: 21" id="target-zeus1-full">
+    <!-- ZEUS 1 TARGETS (25-29) -->
+    <a-entity mindar-image-target="targetIndex: 25" id="target-zeus1-full">
       <a-plane class="zeus-plane" position="0 0 0" width="1" height="1.777" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 22" id="target-zeus1-tl">
+    <a-entity mindar-image-target="targetIndex: 26" id="target-zeus1-tl">
       <a-plane class="zeus-plane" position="0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 23" id="target-zeus1-tr">
+    <a-entity mindar-image-target="targetIndex: 27" id="target-zeus1-tr">
       <a-plane class="zeus-plane" position="-0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 24" id="target-zeus1-bl">
+    <a-entity mindar-image-target="targetIndex: 28" id="target-zeus1-bl">
       <a-plane class="zeus-plane" position="0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 25" id="target-zeus1-br">
+    <a-entity mindar-image-target="targetIndex: 29" id="target-zeus1-br">
       <a-plane class="zeus-plane" position="-0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
 
-    <!-- ZEUS 2 TARGETS (26-30) -->
-    <a-entity mindar-image-target="targetIndex: 26" id="target-zeus2-full">
+    <!-- ZEUS 2 TARGETS (30-34) -->
+    <a-entity mindar-image-target="targetIndex: 30" id="target-zeus2-full">
       <a-plane class="zeus-plane" position="0 0 0" width="1" height="1.777" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 27" id="target-zeus2-tl">
+    <a-entity mindar-image-target="targetIndex: 31" id="target-zeus2-tl">
       <a-plane class="zeus-plane" position="0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 28" id="target-zeus2-tr">
+    <a-entity mindar-image-target="targetIndex: 32" id="target-zeus2-tr">
       <a-plane class="zeus-plane" position="-0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 29" id="target-zeus2-bl">
+    <a-entity mindar-image-target="targetIndex: 33" id="target-zeus2-bl">
       <a-plane class="zeus-plane" position="0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 30" id="target-zeus2-br">
+    <a-entity mindar-image-target="targetIndex: 34" id="target-zeus2-br">
       <a-plane class="zeus-plane" position="-0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
 
-    <!-- ZEUS 3 TARGETS (31-35) -->
-    <a-entity mindar-image-target="targetIndex: 31" id="target-zeus3-full">
+    <!-- ZEUS 3 TARGETS (35-39) -->
+    <a-entity mindar-image-target="targetIndex: 35" id="target-zeus3-full">
       <a-plane class="zeus-plane" position="0 0 0" width="1" height="1.777" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 32" id="target-zeus3-tl">
+    <a-entity mindar-image-target="targetIndex: 36" id="target-zeus3-tl">
       <a-plane class="zeus-plane" position="0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 33" id="target-zeus3-tr">
+    <a-entity mindar-image-target="targetIndex: 37" id="target-zeus3-tr">
       <a-plane class="zeus-plane" position="-0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 34" id="target-zeus3-bl">
+    <a-entity mindar-image-target="targetIndex: 38" id="target-zeus3-bl">
       <a-plane class="zeus-plane" position="0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 35" id="target-zeus3-br">
+    <a-entity mindar-image-target="targetIndex: 39" id="target-zeus3-br">
       <a-plane class="zeus-plane" position="-0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
 
-    <!-- ZEUS 4 TARGETS (36-40) -->
-    <a-entity mindar-image-target="targetIndex: 36" id="target-zeus4-full">
+    <!-- ZEUS 4 TARGETS (40-44) -->
+    <a-entity mindar-image-target="targetIndex: 40" id="target-zeus4-full">
       <a-plane class="zeus-plane" position="0 0 0" width="1" height="1.777" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 37" id="target-zeus4-tl">
+    <a-entity mindar-image-target="targetIndex: 41" id="target-zeus4-tl">
       <a-plane class="zeus-plane" position="0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 38" id="target-zeus4-tr">
+    <a-entity mindar-image-target="targetIndex: 42" id="target-zeus4-tr">
       <a-plane class="zeus-plane" position="-0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 39" id="target-zeus4-bl">
+    <a-entity mindar-image-target="targetIndex: 43" id="target-zeus4-bl">
       <a-plane class="zeus-plane" position="0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 40" id="target-zeus4-br">
+    <a-entity mindar-image-target="targetIndex: 44" id="target-zeus4-br">
       <a-plane class="zeus-plane" position="-0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
 
-    <!-- ZEUS 5 TARGETS (41-45) -->
-    <a-entity mindar-image-target="targetIndex: 41" id="target-zeus5-full">
+    <!-- ZEUS 5 TARGETS (45-49) -->
+    <a-entity mindar-image-target="targetIndex: 45" id="target-zeus5-full">
       <a-plane class="zeus-plane" position="0 0 0" width="1" height="1.777" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 42" id="target-zeus5-tl">
+    <a-entity mindar-image-target="targetIndex: 46" id="target-zeus5-tl">
       <a-plane class="zeus-plane" position="0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 43" id="target-zeus5-tr">
+    <a-entity mindar-image-target="targetIndex: 47" id="target-zeus5-tr">
       <a-plane class="zeus-plane" position="-0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 44" id="target-zeus5-bl">
+    <a-entity mindar-image-target="targetIndex: 48" id="target-zeus5-bl">
       <a-plane class="zeus-plane" position="0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 45" id="target-zeus5-br">
+    <a-entity mindar-image-target="targetIndex: 49" id="target-zeus5-br">
       <a-plane class="zeus-plane" position="-0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
 
-    <!-- ZEUS 6 TARGETS (46-50) -->
-    <a-entity mindar-image-target="targetIndex: 46" id="target-zeus6-full">
+    <!-- ZEUS 6 TARGETS (50-54) -->
+    <a-entity mindar-image-target="targetIndex: 50" id="target-zeus6-full">
       <a-plane class="zeus-plane" position="0 0 0" width="1" height="1.777" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 47" id="target-zeus6-tl">
+    <a-entity mindar-image-target="targetIndex: 51" id="target-zeus6-tl">
       <a-plane class="zeus-plane" position="0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 48" id="target-zeus6-tr">
+    <a-entity mindar-image-target="targetIndex: 52" id="target-zeus6-tr">
       <a-plane class="zeus-plane" position="-0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 49" id="target-zeus6-bl">
+    <a-entity mindar-image-target="targetIndex: 53" id="target-zeus6-bl">
       <a-plane class="zeus-plane" position="0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 50" id="target-zeus6-br">
+    <a-entity mindar-image-target="targetIndex: 54" id="target-zeus6-br">
       <a-plane class="zeus-plane" position="-0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
 
-    <!-- ZEUS 7 TARGETS (51-55) -->
-    <a-entity mindar-image-target="targetIndex: 51" id="target-zeus7-full">
+    <!-- ZEUS 7 TARGETS (55-59) -->
+    <a-entity mindar-image-target="targetIndex: 55" id="target-zeus7-full">
       <a-plane class="zeus-plane" position="0 0 0" width="1" height="1.777" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 52" id="target-zeus7-tl">
+    <a-entity mindar-image-target="targetIndex: 56" id="target-zeus7-tl">
       <a-plane class="zeus-plane" position="0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 53" id="target-zeus7-tr">
+    <a-entity mindar-image-target="targetIndex: 57" id="target-zeus7-tr">
       <a-plane class="zeus-plane" position="-0.5 -0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 54" id="target-zeus7-bl">
+    <a-entity mindar-image-target="targetIndex: 58" id="target-zeus7-bl">
       <a-plane class="zeus-plane" position="0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-    <a-entity mindar-image-target="targetIndex: 55" id="target-zeus7-br">
+    <a-entity mindar-image-target="targetIndex: 59" id="target-zeus7-br">
       <a-plane class="zeus-plane" position="-0.5 0.888 0" width="2" height="3.554" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
   </a-scene>
 
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=5"></script>
   <script src="hand-tracking.js?v=2"></script>
 </body>
 

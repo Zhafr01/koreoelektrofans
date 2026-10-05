@@ -128,8 +128,8 @@
             }
           }
 
-          // Target 20-55: Zeus
-          for (let i = 20; i <= 55; i++) {
+          // Target 20-59: Zeus
+          for (let i = 20; i <= 59; i++) {
             const targetZeus = document.querySelector(`[mindar-image-target="targetIndex: ${i}"]`);
             if (targetZeus) {
               targetZeus.addEventListener('targetFound', onZeusFound);
