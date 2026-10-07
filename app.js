@@ -119,8 +119,8 @@
             }
           }
 
-          // Target 5-15: Raijin (1 dan 2 beserta potongannya, plus foto fisik)
-          for (let i = 5; i <= 15; i++) {
+          // Target 5-25: Raijin (1, 2, 3, 4 beserta potongannya, plus foto fisik)
+          for (let i = 5; i <= 25; i++) {
             const t = document.querySelector(`[mindar-image-target="targetIndex: ${i}"]`);
             if (t) {
               t.addEventListener('targetFound', onRaijinFound);
@@ -128,8 +128,8 @@
             }
           }
 
-          // Target 20-59: Zeus
-          for (let i = 20; i <= 59; i++) {
+          // Target 30-69: Zeus
+          for (let i = 30; i <= 69; i++) {
             const targetZeus = document.querySelector(`[mindar-image-target="targetIndex: ${i}"]`);
             if (targetZeus) {
               targetZeus.addEventListener('targetFound', onZeusFound);
