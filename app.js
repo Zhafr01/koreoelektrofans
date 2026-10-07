@@ -110,17 +110,15 @@
 
         // Helper: pasang event ke semua target
         function attachTargetEvents () {
-          // Target 0-4: Koreo Adam
-          for (let i = 0; i <= 4; i++) {
-            const t = document.querySelector(`[mindar-image-target="targetIndex: ${i}"]`);
-            if (t) {
-              t.addEventListener('targetFound', onTargetFound);
-              t.addEventListener('targetLost',  onTargetLost);
-            }
+          // Target 0: Koreo Adam
+          const tk = document.querySelector('[mindar-image-target="targetIndex: 0"]');
+          if (tk) {
+            tk.addEventListener('targetFound', onTargetFound);
+            tk.addEventListener('targetLost',  onTargetLost);
           }
 
-          // Target 5-25: Raijin (1, 2, 3, 4 beserta potongannya, plus foto fisik)
-          for (let i = 5; i <= 25; i++) {
+          // Target 1-12: Raijin
+          for (let i = 1; i <= 12; i++) {
             const t = document.querySelector(`[mindar-image-target="targetIndex: ${i}"]`);
             if (t) {
               t.addEventListener('targetFound', onRaijinFound);
@@ -128,15 +126,15 @@
             }
           }
 
-          // Target 30-69: Zeus
-          for (let i = 30; i <= 69; i++) {
-            const targetZeus = document.querySelector(`[mindar-image-target="targetIndex: ${i}"]`);
-            if (targetZeus) {
-              targetZeus.addEventListener('targetFound', onZeusFound);
-              targetZeus.addEventListener('targetLost',  onZeusLost);
-            }
+          // Target 13: Zeus
+          const tz = document.querySelector('[mindar-image-target="targetIndex: 13"]');
+          if (tz) {
+            tz.addEventListener('targetFound', onZeusFound);
+            tz.addEventListener('targetLost',  onZeusLost);
           }
         }
+
+
 
         const sceneEl2 = document.querySelector('a-scene');
         if (sceneEl2 && sceneEl2.hasLoaded) attachTargetEvents();

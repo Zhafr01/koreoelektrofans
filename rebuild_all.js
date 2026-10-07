@@ -1,121 +1,26 @@
-<!DOCTYPE html>
-<html lang="id">
+const fs = require('fs');
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <title>AR Koreo — Elektro Fans um</title>
-  <meta name="description"
-    content="Scan gambar Koreo Adam untuk melihat animasi AR yang menakjubkan dari Elektro Fans um." />
-  <meta name="theme-color" content="#0a0a0f" />
+// 1. UPDATE compile.html
+let compileHtml = fs.readFileSync('compile.html', 'utf8');
+const filesToLoad = [
+  'Koreo Adam.jpeg',
+  'Raijin1.jpeg',
+  'Raijin2.jpeg',
+  'raijin3.jpeg', 'raijin3_part_0.jpg', 'raijin3_part_1.jpg', 'raijin3_part_2.jpg', 'raijin3_part_3.jpg',
+  'raijin4.jpeg', 'raijin4_part_0.jpg', 'raijin4_part_1.jpg', 'raijin4_part_2.jpg', 'raijin4_part_3.jpg',
+  'zeus.png'
+];
+compileHtml = compileHtml.replace(/const filesToLoad = \[[\s\S]*?\];/, `const filesToLoad = [\n      '${filesToLoad.join("',\n      '")}'\n    ];`);
+compileHtml = compileHtml.replace(/Memuat otomatis \d+ gambar target/g, `Memuat otomatis ${filesToLoad.length} gambar target`);
+fs.writeFileSync('compile.html', compileHtml);
 
-  <!-- A-Frame -->
-  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  <!-- MindAR -->
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
-  <!-- MediaPipe Hands -->
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+// 2. UPDATE index.html
+let indexHtml = fs.readFileSync('index.html', 'utf8');
+const aSceneStart = indexHtml.indexOf('<a-scene');
+const aSceneEnd = indexHtml.indexOf('</a-scene>') + '</a-scene>'.length;
 
-  <link rel="stylesheet" href="style.css" />
-</head>
-
-<body>
-
-  <!-- ══════════════════════════════════════════
-       LOADING SCREEN
-  ══════════════════════════════════════════ -->
-  <div id="loading-screen">
-    <div class="loading-content">
-      <div class="logo-ring">
-        <svg viewBox="0 0 120 120" class="ring-svg">
-          <circle cx="60" cy="60" r="54" class="ring-track" />
-          <circle cx="60" cy="60" r="54" class="ring-progress" />
-        </svg>
-        <div class="logo-inner">
-          <span class="logo-e">⚡</span>
-        </div>
-      </div>
-      <h1 class="loading-title">Elektro Fans um</h1>
-      <p class="loading-sub">Memuat AR Engine...</p>
-      
-      <button id="btn-start-ar" class="hidden">
-        <span>⚡</span> Mulai AR
-      </button>
-
-      <div class="loading-bar-wrap" id="loading-bar-container">
-        <div class="loading-bar" id="loading-bar"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════
-       UI OVERLAY
-  ══════════════════════════════════════════ -->
-  <div id="ui-overlay" class="hidden">
-
-    <!-- Header -->
-    <div class="ar-header">
-      <div class="header-brand">
-        <span class="bolt">⚡</span>
-        <span class="brand-text">AR Koreo</span>
-      </div>
-      <div class="header-actions" style="display:flex; gap:8px;">
-        <button id="btn-torch" class="icon-btn" title="Nyalakan Senter">
-          <span style="font-size:1.1rem; filter: grayscale(1);">🔦</span>
-        </button>
-        <button id="btn-mute" class="icon-btn" title="Mute/Unmute">
-        <svg id="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-          <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-        </svg>
-        <svg id="icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-          <line x1="23" y1="9" x2="17" y2="15" />
-          <line x1="17" y1="9" x2="23" y2="15" />
-        </svg>
-      </button>
-      </div>
-    </div>
-
-    <!-- Scan Frame -->
-    <div id="scan-frame-wrap">
-      <div class="scan-frame">
-        <div class="corner tl"></div>
-        <div class="corner tr"></div>
-        <div class="corner bl"></div>
-        <div class="corner br"></div>
-        <div class="scan-line"></div>
-      </div>
-      <p class="scan-hint" id="scan-hint">Arahkan kamera ke gambar</p>
-    </div>
-
-    <!-- Target Detected Indicator -->
-    <div id="detected-badge" class="hidden">
-      <span class="pulse-dot"></span>
-      <span>Target Terdeteksi</span>
-    </div>
-
-    <!-- Bottom Info -->
-    <div class="ar-footer">
-      <span class="footer-tag">Elektro Fans um · Since 2018</span>
-    </div>
-
-    <!-- Lightning Overlay -->
-    <div id="lightning-overlay" class="hidden">
-      <div class="lightning left"></div>
-      <div class="lightning right"></div>
-      <div class="lightning top"></div>
-      <div class="lightning bottom"></div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════
-       A-FRAME AR SCENE
-  ══════════════════════════════════════════ -->
-  <a-scene id="ar-scene"
+const newAScene = `<a-scene id="ar-scene"
     mindar-image="imageTargetSrc: targets.mind?v=7; autoStart: false; uiLoading: no; uiError: no; uiScanning: no;"
     color-space="sRGB" renderer="colorManagement: true; physicallyCorrectLights: true; alpha: true"
     vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
@@ -181,10 +86,46 @@
     <a-entity mindar-image-target="targetIndex: 13" id="target-zeus">
       <a-plane class="zeus-plane" position="0 0 0" width="1" height="1.5" rotation="0 0 0" material="src: #zeus-video; shader: flat; transparent: false"></a-plane>
     </a-entity>
-  </a-scene>
+  </a-scene>`;
 
-  <script src="app.js?v=7"></script>
-  <script src="hand-tracking.js?v=2"></script>
-</body>
+indexHtml = indexHtml.substring(0, aSceneStart) + newAScene + indexHtml.substring(aSceneEnd);
+indexHtml = indexHtml.replace(/app\.js\?v=\d+/, 'app.js?v=7');
+fs.writeFileSync('index.html', indexHtml);
 
-</html>
+
+// 3. UPDATE app.js
+let appJs = fs.readFileSync('app.js', 'utf8');
+
+// replace attachTargetEvents body
+const attachStart = appJs.indexOf('function attachTargetEvents () {');
+const attachEnd = appJs.indexOf('}', attachStart + 35) + 1; // wait, there are loops inside.
+// better use regex or just multi replace. Let's do string replacement for the loops
+let newAttachBody = `function attachTargetEvents () {
+          // Target 0: Koreo Adam
+          const tk = document.querySelector('[mindar-image-target="targetIndex: 0"]');
+          if (tk) {
+            tk.addEventListener('targetFound', onTargetFound);
+            tk.addEventListener('targetLost',  onTargetLost);
+          }
+
+          // Target 1-12: Raijin
+          for (let i = 1; i <= 12; i++) {
+            const t = document.querySelector(\`[mindar-image-target="targetIndex: \${i}"]\`);
+            if (t) {
+              t.addEventListener('targetFound', onRaijinFound);
+              t.addEventListener('targetLost',  onRaijinLost);
+            }
+          }
+
+          // Target 13: Zeus
+          const tz = document.querySelector('[mindar-image-target="targetIndex: 13"]');
+          if (tz) {
+            tz.addEventListener('targetFound', onZeusFound);
+            tz.addEventListener('targetLost',  onZeusLost);
+          }
+        }`;
+
+appJs = appJs.replace(/function attachTargetEvents \(\) \{[\s\S]*?(?=\n\s+const sceneEl2)/, newAttachBody + "\n\n");
+fs.writeFileSync('app.js', appJs);
+
+console.log("Updated compile.html, index.html, app.js");
